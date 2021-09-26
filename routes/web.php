@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +13,25 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
 
-Route::get('/inertia', function() {
-    return Inertia::render('inertia');
+Route::get('resources/{resourceType}', [\App\Http\Controllers\ResourceController::class, 'index'])
+    ->name('resources.index');
+
+Route::get('resources/{resource}/download', [\App\Http\Controllers\ResourceController::class, 'download'])
+    ->name('resources.download');    
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register admin specific routes.
+|
+*/
+
+Route::group(['prefix' => 'admin', 'name' => 'admin.'], function() {
+    Route::resource('resources', \App\Http\Controllers\Admin\ResourceController::class)
+        ->only(['index', 'create', 'edit']);
 });
