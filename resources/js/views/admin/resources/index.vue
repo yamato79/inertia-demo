@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
     <v-section class="flex flex-col">
         <v-section-heading>
