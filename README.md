@@ -15,6 +15,8 @@ This has been tested with PHP 7.4.16. There is no guarantee the application will
 
 ## Deployment Instructions
 This is a standard Laravel 8 deployment. After server requirements are met, you may spin-up the application with the following commands below. It is recommended that these commands be run on each deployment or in the preparation phase such that compiled assets and versions are up to date.
+
+Please don't forget to run "php artisan key:generate" in fresh installs.
 ```
 composer install
 php artisan migrate --seed
