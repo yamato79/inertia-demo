@@ -45,7 +45,7 @@ class UpdateResourceRequest extends FormRequest
         ];
 
         if ($this->get('resource_type_id') == ResourceType::DOCUMENT) {
-            $rules['file'] = ['required', 'file'];
+            $rules['file'] = ['nullable'];
         }
 
         if ($this->get('resource_type_id') == ResourceType::LINK) {            
