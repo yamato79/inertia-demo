@@ -1,0 +1,66 @@
+@layer utilities {
+    @variants responsive {
+        /**
+         * margin utilities.
+         */
+        .m-xs {
+            @apply m-1;
+        }
+
+        .m-sm {
+            @apply m-2;
+        }
+
+        .m-md {
+            @apply m-4;
+        }
+
+        .m-lg {
+            @apply m-8;
+        }
+
+        .m-xl {
+            @apply m-16;
+        }
+
+        .mx-xs {
+            @apply mx-1;
+        }
+
+        .mx-sm {
+            @apply mx-2;
+        }
+
+        .mx-md {
+            @apply mx-4;
+        }
+
+        .mx-lg {
+            @apply mx-8;
+        }
+
+        .mx-xl {
+            @apply mx-16;
+        }
+        
+        .my-xs {
+            @apply my-1;
+        }
+
+        .my-sm {
+            @apply my-2;
+        }
+
+        .my-md {
+            @apply my-4;
+        }
+
+        .my-lg {
+            @apply my-8;
+        }
+
+        .my-xl {
+            @apply my-16;
+        }
+    }
+}

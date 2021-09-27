@@ -47,6 +47,26 @@ class Resource extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['file_name'];
+
+    /**
+     * Get the file name from the file path.
+     */
+    public function getFileNameAttribute()
+    {
+        if (!$this->file_path) {
+            return null;
+        }
+
+        $segments = explode("/", $this->file_path);
+        return array_pop($segments);
+    }
+
+    /**
      * Get the message type that this message belongs to.
      */
     public function resourceType()

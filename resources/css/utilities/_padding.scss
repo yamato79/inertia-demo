@@ -1,0 +1,66 @@
+@layer utilities {
+    @variants responsive {
+        /**
+         * padding utilities.
+         */
+        .p-xs {
+            @apply p-1;
+        }
+
+        .p-sm {
+            @apply p-2;
+        }
+
+        .p-md {
+            @apply p-4;
+        }
+
+        .p-lg {
+            @apply p-8;
+        }
+
+        .p-xl {
+            @apply p-16;
+        }
+
+        .px-xs {
+            @apply px-1;
+        }
+
+        .px-sm {
+            @apply px-2;
+        }
+
+        .px-md {
+            @apply px-4;
+        }
+
+        .px-lg {
+            @apply px-8;
+        }
+
+        .px-xl {
+            @apply px-16;
+        }
+        
+        .py-xs {
+            @apply py-1;
+        }
+
+        .py-sm {
+            @apply py-2;
+        }
+
+        .py-md {
+            @apply py-4;
+        }
+
+        .py-lg {
+            @apply py-8;
+        }
+
+        .py-xl {
+            @apply py-16;
+        }
+    }
+}

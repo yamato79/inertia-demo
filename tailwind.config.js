@@ -1,5 +1,8 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
     purge: [
+        "./resources/**/*.scss",
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
@@ -8,12 +11,21 @@ module.exports = {
     darkMode: false,
 
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: colors.pink,
+            },
+        },
     },
 
     variants: {
-        extend: {},
+        extend: {
+            opacity: ["disabled"],
+            cursor: ["disabled"],
+        },
     },
 
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/forms'),
+    ],
 }

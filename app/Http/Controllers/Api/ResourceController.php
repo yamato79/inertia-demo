@@ -20,7 +20,11 @@ class ResourceController extends Controller
      */
     public function store(CreateResourceRequest $request)
     {
-       $resource = Resource::create($request->validated());
+        $resource = Resource::create($request->validated());
+
+        if (($request->file('file') !== null) && $resource->resource_type_id == ResourceType::DOCUMENT) {
+            $this->setResourceFile($resource, $request->file('file'));
+        }
 
         return (new ResourceResource($resource))
             ->additional([
@@ -50,14 +54,10 @@ class ResourceController extends Controller
      */
     public function update(UpdateResourceRequest $request, Resource $resource)
     {
-       $resource->update($request->validated());
+        $resource->update($request->validated());
 
-        if ($request->filled('file') && $resource->resource_type_id === ResourceType::DOCUMENT) {
-            $filePath = $request->file('file')->store('uploads/documents');
-
-            $resource->update([
-                'file_path' => $filePath,
-            ]);
+        if (($request->file('file') !== null) && $resource->resource_type_id == ResourceType::DOCUMENT) {
+            $this->setResourceFile($resource, $request->file('file'));
         }
 
         return (new ResourceResource($resource))
@@ -66,6 +66,29 @@ class ResourceController extends Controller
                     'message' => 'Successfully updated resource.',
                 ],
             ]);
+    }
+
+    /**
+     * Sets the file for the given resource.
+     * 
+     * @param Resource $resource
+     * @param \Illuminate\Http\UploadedFile $file
+     * @return void
+     */
+    public function setResourceFile(Resource $resource, \Illuminate\Http\UploadedFile $file)
+    {
+        // Delete the old file.
+        if (!blank($resource->file_path) && file_exists(storage_path("app/{$resource->file_path}"))) {
+            Storage::delete($resource->file_path);
+        }
+
+        $directory = "uploads/documents";
+        $fileName = "resource_".$resource->getKey()."_".$file->getClientOriginalName();
+        $newFilePath = $file->storeAs($directory, $fileName);
+
+        $resource->update([
+            'file_path' => $newFilePath,
+        ]);
     }
 
     /**

@@ -21,6 +21,7 @@ class ResourceResource extends JsonResource
             'content' => $this->content,
             'description' => $this->description,
             'file_path' => $this->file_path,
+            'file_name' => $this->file_name,
             'link' => $this->link,
             'target' => $this->target,
             'title' => $this->title,

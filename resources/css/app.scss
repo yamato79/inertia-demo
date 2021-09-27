@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./utilities/gap";
+@import "./utilities/margin";
+@import "./utilities/padding";
+@import "./utilities/space";
+
+body, html, #app {
+    width: 100%;
+    height: 100%;
+}
+
+.swal2-container.swal2-center.swal2-backdrop-show .swal2-actions button.swal2-confirm {
+    @apply bg-primary-500 #{!important};
+}

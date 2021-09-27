@@ -13,5 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('resources', \App\Http\Controllers\Api\DocumentController::class)
+Route::apiResource('resources', \App\Http\Controllers\Api\ResourceController::class)
     ->except(['index']);

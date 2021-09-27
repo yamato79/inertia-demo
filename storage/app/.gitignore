@@ -1,3 +1,4 @@
-*
+uploads/documents/*
+!uploads/documents/.gitkeep
 !public/
 !.gitignore

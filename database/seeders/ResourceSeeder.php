@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Resource;
+use App\Models\ResourceType;
 use Illuminate\Database\Seeder;
 
 class ResourceSeeder extends Seeder
@@ -14,6 +15,10 @@ class ResourceSeeder extends Seeder
      */
     public function run()
     {
-        Resource::factory(15)->create();
+        ResourceType::all()->each(function ($resourceType) {
+            Resource::factory(3)->state([
+                'resource_type_id' => $resourceType->getKey(),
+            ])->create();
+        });
     }
 }

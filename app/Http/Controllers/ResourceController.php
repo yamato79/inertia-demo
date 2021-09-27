@@ -29,6 +29,6 @@ class ResourceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function download(Resource $resource) {
-        return response()->download($resource->file_path);
+        return response()->download(storage_path("app/{$resource->file_path}"));
     }
 }

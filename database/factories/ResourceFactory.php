@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Resource;
 use App\Models\ResourceType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 
 class ResourceFactory extends Factory
 {
@@ -24,28 +25,28 @@ class ResourceFactory extends Factory
     {
         $resourceType = ResourceType::all()->random();
 
-        logger()->info('resourceType', [
-            'resourceType' => $resourceType->getKey(),
-        ]);
-
-        $commonDefinition = [
+        return [
             'title' => $this->faker->sentence(),
             'resource_type_id' => $resourceType->getKey(),
         ];
+    }
 
-        $resourceTypeDefinition = [
-            // This will be filled with the conditional below.
-        ];
-        
-        if ($resourceType->slug === 'document') {
-            $resourceTypeDefinition = $this->getDocumentDefinition();
-        } else if ($resourceType->slug === 'link') {
-            $resourceTypeDefinition = $this->getLinkDefinition();
-        } else if ($resourceType->slug === 'snippet') {
-            $resourceTypeDefinition = $this->getSnippetDefinition();
-        }
-
-        return array_merge($commonDefinition, $resourceTypeDefinition);
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Resource $resource) {
+            if ($resource->resourceType->slug == 'document') {
+                $resource->update($this->getDocumentDefinition($resource));
+            } else if ($resource->resourceType->slug == 'link') {
+                $resource->update($this->getLinkDefinition());
+            } else if ($resource->resourceType->slug == 'snippet') {
+                $resource->update($this->getSnippetDefinition());
+            }
+        });
     }
 
     /**
@@ -54,9 +55,13 @@ class ResourceFactory extends Factory
      * 
      * @return array
      */
-    public function getDocumentDefinition() {
+    public function getDocumentDefinition(Resource $resource) {
+        $fileName = 'resource_'.$resource->getKey().'_blank.txt';
+        $filePath = "uploads/documents/{$fileName}";
+        touch(storage_path("app/".$filePath));
+
         return [
-            'file_path' => storage_path('uploads/documents/blank.pdf'),
+            'file_path' => $filePath,
         ];
     }
 
@@ -82,8 +87,13 @@ class ResourceFactory extends Factory
      * @return array
      */
     public function getSnippetDefinition() {
+        $dom = new \DOMDocument();
+        $dom->preserveWhiteSpace = false;
+        $dom->loadHTML($this->faker->randomHtml(), LIBXML_HTML_NOIMPLIED);
+        $dom->formatOutput = true;
+
         return [
-            'content' => $this->faker->randomHtml(),
+            'content' => $dom->saveXML($dom->documentElement),
             'description' => $this->faker->sentence(),
         ];
     }
