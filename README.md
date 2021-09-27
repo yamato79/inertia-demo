@@ -47,5 +47,3 @@ php artisan serve
 - [TailwindUI](https://tailwindui.com/).
 - [Acme Logo](http://acmelogos.com/).
 - [Ace Editor](https://ace.c9.io/).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
